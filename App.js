@@ -12,8 +12,9 @@ export default function App() {
         loop={false}
         showsPagination={false}
         index={1}>
-      <Main/>
-      <Home/>
+        <Home />
+        <Main />
+
       </Swiper>
     </View>
   );

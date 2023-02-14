@@ -4,6 +4,7 @@ import Yepp from './Yepp';
 export default function Home() {
   return (
       <View style={styles.content}>
+        
         <View style={styles.heading}>
           <View style={{ flex:3, alignContent: 'flex-start', justifyContent:'center' }}>
             <Text style={{ color: '#a18830', fontWeight:'bold', fontSize:20 }}>Detection History</Text>
@@ -12,6 +13,7 @@ export default function Home() {
             <Text style={{ color: '#a18830' }}> yepp</Text>
           </View>
         </View>
+        
         <View style={styles.body}>
           <ScrollView>
             <Yepp />
