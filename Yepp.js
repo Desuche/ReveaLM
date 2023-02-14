@@ -5,11 +5,11 @@ import { View, StyleSheet, Text, Pressable } from "react-native";
 export default function Yepp() {
     return (
         <View style={styles.top}>
-        <Pressable android_ripple={{ color:'#444444', foreground:true, radius:200 }}>
+            <Pressable android_ripple={{ color: '#444444', foreground: true, radius: 200 }}>
                 <View style={styles.block}>
                     <Text style={styles.text}> yepp</Text>
                 </View>
-        </Pressable>
+            </Pressable>
         </View>
     )
 }
@@ -17,8 +17,8 @@ export default function Yepp() {
 
 const styles = StyleSheet.create({
     top: {
-        marginBottom:5,
-        
+        marginBottom: 5,
+
     },
     block: {
         backgroundColor: '#101115',
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 25,
         color: '#ffffff'
-      },
+    },
 
 })
 

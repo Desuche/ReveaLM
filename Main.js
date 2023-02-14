@@ -92,13 +92,13 @@ export default function Main() {
                 coverScreen={false}
             >
                 <View style={styles.menu}>
-                    <MenuItem text={"Accessibility"} onTap={()=>{setSubmenu(true);setMenu(false);}}/>
-                    <MenuItem text={"Light Mode"} onTap={()=>{setMenu(false)}}/>
-                    <MenuItem text={"Docs"} onTap={()=>{setMenu(false)}}/>
+                    <MenuItem text={"Accessibility"} onTap={() => { setSubmenu(true); setMenu(false); }} />
+                    <MenuItem text={"Light Mode"} onTap={() => { setMenu(false) }} />
+                    <MenuItem text={"Docs"} onTap={() => { setMenu(false) }} />
                 </View>
 
             </Modal>
-                {/* Accessibility */}
+            {/* Accessibility */}
             <Modal
                 animationIn={'fadeIn'}
                 animationInTiming={1}
@@ -111,11 +111,11 @@ export default function Main() {
                 coverScreen={false}
             >
                 <View style={styles.menu}>
-                <MenuItem text={"Extra Small"} onTap={()=>{setSubmenu(false)}}/>
-                    <MenuItem text={"Small"} onTap={()=>{setSubmenu(false)}}/>
-                    <MenuItem text={"Normal"} onTap={()=>{setSubmenu(false)}}/>
-                    <MenuItem text={"Large"} onTap={()=>{setSubmenu(false)}}/>
-                    <MenuItem text={"Extra Large"} onTap={()=>{setSubmenu(false)}}/>
+                    <MenuItem text={"Extra Small"} onTap={() => { setSubmenu(false) }} />
+                    <MenuItem text={"Small"} onTap={() => { setSubmenu(false) }} />
+                    <MenuItem text={"Normal"} onTap={() => { setSubmenu(false) }} />
+                    <MenuItem text={"Large"} onTap={() => { setSubmenu(false) }} />
+                    <MenuItem text={"Extra Large"} onTap={() => { setSubmenu(false) }} />
                 </View>
 
             </Modal>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     menu: {
         position: 'absolute',
         top: -25,
-        right: -10, 
+        right: -10,
         justifyContent: 'flex-start',
         borderRadius: 20,
         backgroundColor: '#404145',
