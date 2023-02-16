@@ -1,5 +1,5 @@
-import React from "react";
-import { TextInput, StyleSheet, Text, View, Button, ActivityIndicator, FlatList } from 'react-native';
+import React, { useRef } from "react";
+import { TextInput, StyleSheet, Text, View, Button, ActivityIndicator, Alert } from 'react-native';
 import Modal from "react-native-modal";
 import { useState } from 'react';
 import Popup from "./Popup";
@@ -9,11 +9,18 @@ import MenuItem from "./MenuItem";
 
 
 export default function Main() {
+    const textboxInput = useRef()
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false);
     const [submenu, setSubmenu] = useState(false);
     const [text, setText] = useState("");
+    const [results, setResults] = useState({
+        'label': null,
+        "Burstiness": null,
+        "Perplexity": null,
+        "Perplexity per line": null,
+    });
 
 
     const fetchResults = (content) => {
@@ -21,15 +28,21 @@ export default function Main() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 'data' : content })
+            body: JSON.stringify({ 'data': content })
         }
 
-        console.log('sending')
-        console.log(requestOptions)
         let url = 'http://158.182.203.74:5000/test'
         fetch(url, requestOptions)
-            .then((res) => { console.log("success"); return res.json() })
-            .then((data) => { console.log(data); })
+            .then((res) => { return res.json() })
+            .then((data) => { setResults(data["data"]); return (data["data"]["label"]) })
+            .then((label) => {
+                setLoading(false);
+                if (label == -1) {
+                    Alert.alert("It's not magic!", "Text is too short for processing", [{
+                        text: 'OK', onPress: () => console.log('OK Pressed')
+                    }])
+                } else { setModal(true); textboxInput.current.clear();}
+            })
 
     }
 
@@ -51,6 +64,7 @@ export default function Main() {
             <View style={styles.body}>
                 <View style={styles.textInput}>
                     <TextInput
+                        ref={textboxInput}
                         editable
                         multiline
                         numberOfLines={15}
@@ -66,23 +80,22 @@ export default function Main() {
                         color="#101115"
                         onPress={() => {
                             setLoading(true);
-                            setTimeout(() => { setLoading(false); setModal(true); }, 1500);
                             fetchResults(text);
                         }}
                     />
                 </View>
             </View>
 
-
+            {/* Results Modal */}
             <Modal
                 animationIn={'slideInUp'}
                 animationInTiming={300}
                 isVisible={modal}
-                onBackButtonPress={() => { setModal(false) }}
-                onBackdropPress={() => { setModal(false) }}
+                onBackButtonPress={() => { setText(""); setModal(false) }}
+                onBackdropPress={() => { setText(""); setModal(false) }}
                 backdropOpacity={0.5}
                 coverScreen={false}
-                children={<Popup />}
+                children={<Popup text={text} results={results} />}
 
             />
 
