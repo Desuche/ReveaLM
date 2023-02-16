@@ -13,6 +13,26 @@ export default function Main() {
     const [loading, setLoading] = useState(false);
     const [menu, setMenu] = useState(false);
     const [submenu, setSubmenu] = useState(false);
+    const [text, setText] = useState("");
+
+
+    const fetchResults = (content) => {
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'data' : content })
+        }
+
+        console.log('sending')
+        console.log(requestOptions)
+        let url = 'http://158.182.203.74:5000/test'
+        fetch(url, requestOptions)
+            .then((res) => { console.log("success"); return res.json() })
+            .then((data) => { console.log(data); })
+
+    }
+
     return (
         <View style={styles.content}>
             <View style={styles.heading}>
@@ -34,6 +54,7 @@ export default function Main() {
                         editable
                         multiline
                         numberOfLines={15}
+                        onChangeText={(txt) => setText(txt)}
                         placeholder='Enter text to be analyzed'
                         placeholderTextColor='#333333'
                         style={{ padding: 30, color: '#fff' }}
@@ -46,6 +67,7 @@ export default function Main() {
                         onPress={() => {
                             setLoading(true);
                             setTimeout(() => { setLoading(false); setModal(true); }, 1500);
+                            fetchResults(text);
                         }}
                     />
                 </View>
