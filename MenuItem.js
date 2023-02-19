@@ -1,15 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 
 export default function MenuItem(props) {
     return (
         <View >
-            <Pressable android_ripple={{ color: '#111111', foreground: true, radius: 200 }} onPress={props.onTap}>
+            <TouchableOpacity onPress={props.onTap}>
                 <View style={styles.block}>
                     <Text style={styles.text}> {props.text}</Text>
                 </View>
-            </Pressable>
+            </TouchableOpacity>
 
         </View>
     )

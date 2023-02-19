@@ -5,10 +5,14 @@ import { useState } from 'react';
 import Popup from "./Popup";
 import MenuItem from "./MenuItem";
 
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { store } from './redux/store.js';
+import { addHistory } from './redux/actions/storeHistory';
 
 
 
-export default function Main() {
+
+export default function Main(props) {
     const textboxInput = useRef()
     const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,11 +23,28 @@ export default function Main() {
         'label': null,
         "Burstiness": null,
         "Perplexity": null,
-        "Perplexity per line": null,
+        "PerpPerLine": null,
+        'text': null
     });
+
+    const dispatch = useDispatch();
+    const hist = useSelector((store) => store.history.history)
+
+    const handleAddHistory = (data) => {
+        dispatch(addHistory(data));
+    }
+
 
 
     const fetchResults = (content) => {
+        let resultsTimeout = setTimeout(() => {
+            setLoading(false);
+            Alert.alert("Timeout", "Server out of order", [
+                { text: 'Retry', onPress: () => { setLoading(true); fetchResults(content); } },
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ])
+            return;
+        }, 20000);
 
         const requestOptions = {
             method: 'POST',
@@ -31,17 +52,31 @@ export default function Main() {
             body: JSON.stringify({ 'data': content })
         }
 
-        let url = 'http://158.182.203.74:5000/test'
+        let url = 'http://158.182.202.96:5000/test'
         fetch(url, requestOptions)
-            .then((res) => { return res.json() })
-            .then((data) => { setResults(data["data"]); return (data["data"]["label"]) })
-            .then((label) => {
+            .then((res) => { clearTimeout(resultsTimeout); return res.json(); })
+            .then((data) => {
+                let res = {
+                    'label': data["data"]["label"],
+                    'Burstiness': data["data"]["Burstiness"],
+                    'Perplexity': data["data"]["Perplexity"],
+                    'PerpPerLine': data["data"]["PerpPerLine"],
+                    'text': content
+                }
+                setResults(res);
+                return (res)
+            })
+            .then((res) => {
                 setLoading(false);
-                if (label == -1) {
+                if (res['label'] == -1) {
                     Alert.alert("It's not magic!", "Text is too short for processing", [{
                         text: 'OK', onPress: () => console.log('OK Pressed')
                     }])
-                } else { setModal(true); textboxInput.current.clear();}
+                } else {
+                    setModal(true);
+                    handleAddHistory(res);
+                    textboxInput.current.clear();
+                }
             })
 
     }
@@ -67,11 +102,11 @@ export default function Main() {
                         ref={textboxInput}
                         editable
                         multiline
-                        numberOfLines={15}
+                        numberOfLines={25}
                         onChangeText={(txt) => setText(txt)}
                         placeholder='Enter text to be analyzed'
-                        placeholderTextColor='#333333'
-                        style={{ padding: 30, color: '#fff' }}
+                        placeholderTextColor='#777'                   
+                        style={{ padding: 30, color: '#fff', fontSize: 20 }}
                     />
                 </View>
                 <View style={{ borderBottomEndRadius: 10, alignItems: 'center' }}>
@@ -94,8 +129,8 @@ export default function Main() {
                 onBackButtonPress={() => { setText(""); setModal(false) }}
                 onBackdropPress={() => { setText(""); setModal(false) }}
                 backdropOpacity={0.5}
-                coverScreen={false}
-                children={<Popup text={text} results={results} />}
+                coverScreen={true}
+                children={<Popup results={results} />}
 
             />
 
@@ -106,7 +141,7 @@ export default function Main() {
                 animationOutTiming={1}
                 isVisible={loading}
                 backdropOpacity={0.7}
-                coverScreen={false}
+                coverScreen={true}
             >
                 <View >
                     <ActivityIndicator />
@@ -128,11 +163,10 @@ export default function Main() {
             >
                 <View style={styles.menu}>
                     <MenuItem text={"Accessibility"} onTap={() => { setSubmenu(true); setMenu(false); }} />
-                    <MenuItem text={"Light Mode"} onTap={() => { setMenu(false) }} />
                     <MenuItem text={"Docs"} onTap={() => { setMenu(false) }} />
                 </View>
-
             </Modal>
+
             {/* Accessibility */}
             <Modal
                 animationIn={'fadeIn'}
@@ -152,7 +186,6 @@ export default function Main() {
                     <MenuItem text={"Large"} onTap={() => { setSubmenu(false) }} />
                     <MenuItem text={"Extra Large"} onTap={() => { setSubmenu(false) }} />
                 </View>
-
             </Modal>
 
         </View>
@@ -162,12 +195,7 @@ export default function Main() {
 const styles = StyleSheet.create({
     content: {
         backgroundColor: '#000',
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
-        marginTop: 50,
-
-        height: '88%',
-        width: '100%'
+        flex:1
     },
     heading: {
         flex: 1,
@@ -177,16 +205,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     body: {
-        flex: 2,
+        flex: 3,
     },
     textInput: {
         backgroundColor: '#101115',
-        margin: 20,
-        borderRadius: 10
-    },
-    modal: {
-        width: '80%',
-        height: '80%'
+        marginHorizontal: 30,
+        marginVertical: 10,
+        borderRadius: 40, maxHeight: 490
     },
     loading: {
         backgroundColor: '#fff',
@@ -195,11 +220,10 @@ const styles = StyleSheet.create({
         margin: 50,
         padding: 20,
         borderRadius: 10
-
     },
     menu: {
         position: 'absolute',
-        top: -25,
+        top: -20,
         right: -10,
         justifyContent: 'flex-start',
         borderRadius: 20,

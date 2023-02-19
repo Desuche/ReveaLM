@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "firstTrial",
-    "slug": "firstTrial",
+    "name": "ReveAI",
+    "slug": "ReveAI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "com.uchexanderd.firstTrial"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ed4cc6bd-239c-4000-8d8f-2961c305a841"
+      }
     }
   }
 }

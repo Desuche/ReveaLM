@@ -1,25 +1,26 @@
-import React from "react";
-import { View, StyleSheet, Text, Pressable } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
+import Popup from "./Popup";
 
 
-export default function Yepp() {
+export default function Yepp(props) {
+
+
     return (
+
         <View style={styles.top}>
-            <Pressable android_ripple={{ color: '#444444', foreground: true, radius: 200 }}>
+            <TouchableOpacity onPress={props.popout}>
                 <View style={styles.block}>
-                    <Text style={styles.text}> yepp</Text>
+                    <Text style={styles.text}> {props.data['label']}</Text>
                 </View>
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }
 
 
 const styles = StyleSheet.create({
-    top: {
-        marginBottom: 5,
 
-    },
     block: {
         backgroundColor: '#101115',
         height: 110,
