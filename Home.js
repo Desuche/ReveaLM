@@ -3,8 +3,9 @@ import { ScrollView, StyleSheet, Text, View, FlatList, TouchableOpacity } from '
 import Modal from "react-native-modal";
 import Yepp from './Yepp';
 import Popup from './Popup';
-import Icon from 'react-native-ionicons';
-import * as Font from 'expo-font'
+import Ionicons from '@expo/vector-icons/Ionicons'
+import { EvilIcons } from '@expo/vector-icons';
+// import Ionicons from '@expo/vector-icons';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addHistory, clearHistory } from './redux/actions/storeHistory';
@@ -46,12 +47,16 @@ export default function Home(props) {
         <View style={{ flex: 3, alignContent: 'flex-start', justifyContent: 'center' }}>
           <Text style={{ color: '#a18830', fontWeight: 'bold', fontSize: 20 }}>Detection History</Text>
         </View>
-        <TouchableOpacity onPress={handleClearHistory}>
-          <View style={{ flex: 1, alignContent: 'flex-end', justifyContent: 'center', position: 'relative', top: 50, borderRadius: 10 }}>
-            <Icon name="trash"/>
-            <Text style={{ color: '#995078' }}> yepp</Text>
+        {/* <TouchableOpacity onPress={handleClearHistory}>
+          <View style={{ flex: 1, alignContent: 'flex-end', justifyContent: 'center' }}>
+            <Ionicons.Button name="trash" size={10} backgroundColor={'#995078'}/>
+            {/* <Ionicons name="md-trash-outline" size={24} color="black" /> */}
+            {/* <EvilIcons name="chart" size={32}/>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        <View style={{  }}>
+        <Ionicons.Button name="trash" size={20} backgroundColor={'#995078'} onPress={handleClearHistory} style={{borderRadius:200 }} />
+        </View>
       </View >
 
       <View style={styles.body}>
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     flexDirection: 'row',
     paddingHorizontal: 30,
     justifyContent: 'space-around'
