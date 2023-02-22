@@ -21,7 +21,7 @@ export default function Home(props) {
   })
 
   const dispatch = useDispatch();
-  const hist = useSelector((store) => store.history.history)
+  const hist = useSelector((store) => store.history)
 
   const handleAddHistory = (data) => {
     dispatch(addHistory(data));

@@ -63,7 +63,7 @@ export default function TabBar({ state, descriptors, navigation }) {
                 };
 
                 return (
-                    <View style={{ maxWidth: 400, position:"relative", top:10 }}>
+                    <View key={route.key} style={{ maxWidth: 400, position:"relative", top:10 }}>
                         <TouchableOpacity
                             accessibilityRole="button"
                             accessibilityState={isFocused ? { selected: true } : {}}

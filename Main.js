@@ -28,7 +28,8 @@ export default function Main(props) {
     });
 
     const dispatch = useDispatch();
-    const hist = useSelector((store) => store.history.history)
+    const hist = useSelector((store) => store
+    .history)
 
     const handleAddHistory = (data) => {
         dispatch(addHistory(data));
@@ -41,7 +42,7 @@ export default function Main(props) {
             setLoading(false);
             Alert.alert("Timeout", "Server out of order", [
                 { text: 'Retry', onPress: () => { setLoading(true); fetchResults(content); } },
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
+                { text: 'OK' },
             ])
             return;
         }, 20000);
@@ -52,7 +53,7 @@ export default function Main(props) {
             body: JSON.stringify({ 'data': content })
         }
 
-        let url = 'http://158.182.202.96:5000/test'
+        let url = 'http://158.182.188.155:5000/test'
         fetch(url, requestOptions)
             .then((res) => { clearTimeout(resultsTimeout); return res.json(); })
             .then((data) => {
@@ -70,7 +71,7 @@ export default function Main(props) {
                 setLoading(false);
                 if (res['label'] == -1) {
                     Alert.alert("It's not magic!", "Text is too short for processing", [{
-                        text: 'OK', onPress: () => console.log('OK Pressed')
+                        text: 'OK',
                     }])
                 } else {
                     setModal(true);
