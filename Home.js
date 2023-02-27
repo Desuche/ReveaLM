@@ -47,16 +47,6 @@ export default function Home(props) {
         <View style={{ flex: 3, alignContent: 'flex-start', justifyContent: 'center' }}>
           <Text style={{ color: '#a18830', fontWeight: 'bold', fontSize: 20 }}>Detection History</Text>
         </View>
-        {/* <TouchableOpacity onPress={handleClearHistory}>
-          <View style={{ flex: 1, alignContent: 'flex-end', justifyContent: 'center' }}>
-            <Ionicons.Button name="trash" size={10} backgroundColor={'#995078'}/>
-            {/* <Ionicons name="md-trash-outline" size={24} color="black" /> */}
-            {/* <EvilIcons name="chart" size={32}/>
-          </View>
-        </TouchableOpacity> */}
-        <View style={{  }}>
-        <Ionicons.Button name="trash" size={20} backgroundColor={'#995078'} onPress={handleClearHistory} style={{borderRadius:200 }} />
-        </View>
       </View >
 
       <View style={styles.body}>
@@ -65,7 +55,7 @@ export default function Home(props) {
 
           data={hist}
           ListEmptyComponent={
-            <View style={{ height: 400,  backgroundColor:'#000', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ height: 400, backgroundColor: '#000', justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ color: '#555555' }}> wow, such empty</Text>
             </View>
           }
@@ -89,6 +79,10 @@ export default function Home(props) {
         coverScreen={true}
         children={<Popup results={popoutData} />}
       />
+
+      <View style={{ position: 'absolute', top: 720, left: 330 }}>
+        <Ionicons.Button name="trash" size={30} backgroundColor={'#995078'} onPress={handleClearHistory} style={{ borderRadius: 0 }} />
+      </View>
     </View >
   );
 }

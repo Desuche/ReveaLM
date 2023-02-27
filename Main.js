@@ -53,7 +53,7 @@ export default function Main(props) {
             body: JSON.stringify({ 'data': content })
         }
 
-        let url = 'http://158.182.188.155:5000/test'
+        let url = 'http://158.182.114.198:5000/test'
         fetch(url, requestOptions)
             .then((res) => { clearTimeout(resultsTimeout); return res.json(); })
             .then((data) => {
